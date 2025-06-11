@@ -12,19 +12,19 @@ const seedSuperAdmin = async () => {
     await mongoose.connect(process.env.MONGO_URI);
     console.log('Connected to MongoDB');
 
-    const existing = await recruitermodel.findOne({ email: 'sushil@gmail.com' });
+    const existing = await recruitermodel.findOne({ email: 'sunil@gmail.com' });
     if (existing) {
       console.log('Super Admin already exists');
       return process.exit();
     }
 
-    const hashedPassword = await bcrypt.hash('sushil', 10);
+
 
     const superAdmin = await recruitermodel.create({
-      first_name: 'sushil',
-      last_name: 'sushil',
-      email: 'sushil@gmail.com',
-      password_hash: hashedPassword,
+      fullname:"sunil",
+      email: 'sunil@gmail.com',
+      number:"1234567890",
+      password:"sunil",
       role: 'super_admin'
     });
 

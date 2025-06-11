@@ -19,10 +19,9 @@ const loginController = async (req, res) => {
     }
 
   
-    const isMatch = await bcrypt.compare(password, user.password_hash);
-    if (!isMatch) {
-      return res.status(401).json({ message: 'Invalid email or password' });
-    }
+   if (password !== user.password) {
+    return res.status(401).json({ message: 'Invalid email or password' });
+   }
 
     
     const payload = {

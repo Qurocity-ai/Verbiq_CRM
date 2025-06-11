@@ -1,11 +1,11 @@
 const recruitermodel = require('../models/recruitermodel');
 
-const bcrypt = require('bcryptjs');
+
 
 
 const createRecruiter = async (req, res) => {
   try {
-    const { first_name, last_name, email, password, role } = req.body;
+    const { fullname, email, password, role , number } = req.body;
 
 
     const existing = await recruitermodel.findOne({ email });
@@ -14,14 +14,14 @@ const createRecruiter = async (req, res) => {
     }
 
  
-    const password_hash = await bcrypt.hash(password, 10);
+  
 
 
     const newUser = new recruitermodel({
-      first_name,
-      last_name,
+      fullname,
       email,
-      password_hash,
+      password,
+      number,
       role,
       created_by: req.user.id // added by middleware
     });
