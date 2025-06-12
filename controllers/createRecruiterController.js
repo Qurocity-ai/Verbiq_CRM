@@ -1,21 +1,14 @@
-const recruitermodel = require('../models/recruitermodel');
-
-
-
+const recruitermodel = require("../models/recruitermodel");
+const { getRecuiters } = require("../controllers/recruiterController");
 
 const createRecruiter = async (req, res) => {
   try {
-    const { fullname, email, password, role , number } = req.body;
-
+    const { fullname, email, password, role, number } = req.body;
 
     const existing = await recruitermodel.findOne({ email });
     if (existing) {
-      return res.status(409).json({ message: 'Email already exists.' });
+      return res.status(409).json({ message: "Email already exists." });
     }
-
- 
-  
-
 
     const newUser = new recruitermodel({
       fullname,
@@ -23,7 +16,7 @@ const createRecruiter = async (req, res) => {
       password,
       number,
       role,
-      created_by: req.user.id // added by middleware
+      created_by: req.user.id, // added by middleware
     });
 
     await newUser.save();
@@ -33,14 +26,13 @@ const createRecruiter = async (req, res) => {
       user: {
         id: newUser._id,
         email: newUser.email,
-        role: newUser.role
-      }
+        role: newUser.role,
+      },
     });
   } catch (err) {
-    console.error('Error creating user:', err);
-    res.status(500).json({ message: 'Server error' });
+    console.error("Error creating user:", err);
+    res.status(500).json({ message: "Server error" });
   }
 };
-
 
 module.exports = createRecruiter;
