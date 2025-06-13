@@ -1,4 +1,4 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
 const {
   createRecruiter,
@@ -9,6 +9,7 @@ const {
 } = require('../controllers/createRecruiterController');
 const authenticate = require('../middlewares/authenticate');
 
+router.post("/createrecruiter", authenticate("super_admin"), createRecruiter);
 
 router.post('/createrecruiter', authenticate('super_admin'), createRecruiter);
 router.get('/getrecruiter/:id', authenticate('super_admin'), getSingleRecruiter);

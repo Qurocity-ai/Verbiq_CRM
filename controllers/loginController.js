@@ -1,42 +1,38 @@
-const recruitermodel = require('../models/recruitermodel');
-const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
-
+const recruitermodel = require("../models/recruitermodel");
+const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
 
 const loginController = async (req, res) => {
   try {
     const { email, password } = req.body;
 
- 
     if (!email || !password) {
-      return res.status(400).json({ message: 'Email and password are required' });
+      return res
+        .status(400)
+        .json({ message: "Email and password are required" });
     }
 
-    
     const user = await recruitermodel.findOne({ email });
     if (!user) {
-      return res.status(401).json({ message: 'Invalid email or password' });
+      return res.status(401).json({ message: "Invalid email or password" });
     }
 
-  
-   if (password !== user.password) {
-    return res.status(401).json({ message: 'Invalid email or password' });
-   }
+    if (password !== user.password) {
+      return res.status(401).json({ message: "Invalid email or password" });
+    }
 
-    
     const payload = {
       id: user._id,
       email: user.email,
       role: user.role,
     };
 
-    
-    const token = jwt.sign(payload, process.env.JWT_SECRET , {
-      expiresIn: '1d',
+    const token = jwt.sign(payload, process.env.JWT_SECRET, {
+      expiresIn: "1d",
     });
 
     res.json({
-      message: 'Login successful',
+      message: "Login successful",
       token,
       user: {
         id: user._id,
@@ -47,8 +43,8 @@ const loginController = async (req, res) => {
       },
     });
   } catch (error) {
-    console.error('Login error:', error);
-    res.status(500).json({ message: 'Server error' });
+    console.error("Login error:", error);
+    res.status(500).json({ message: "Server error" });
   }
 };
 

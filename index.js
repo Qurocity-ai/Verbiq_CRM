@@ -3,7 +3,7 @@ const cors = require("cors");
 const dotenv = require("dotenv");
 const connectDB = require("./config/db");
 const loginRoutes = require("./routes/loginRoutes");
-const RecruiterRoutes = require("./routes/RecruiterRoutes");
+const RecruiterRoutes = require("./routes/RecruiterRoutes.js");
 
 dotenv.config();
 connectDB();
