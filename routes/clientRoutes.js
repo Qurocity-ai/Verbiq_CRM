@@ -7,4 +7,4 @@ const authenticate=require('../middlewares/authenticate')
 
 router.post('/createClient',authenticate("super_admin"),createClient);
 
-module.exports=router;
+module.exports=router; //
