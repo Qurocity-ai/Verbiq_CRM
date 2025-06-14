@@ -4,6 +4,7 @@ const dotenv = require("dotenv");
 const connectDB = require("./config/db");
 const loginRoutes = require("./routes/loginRoutes");
 const RecruiterRoutes = require("./routes/RecruiterRoutes.js");
+const clientRoutes=require("./routes/clientRoutes")
 
 dotenv.config();
 connectDB();
@@ -14,6 +15,7 @@ app.use(cors());
 app.use(express.json());
 app.use("/api", loginRoutes);
 app.use("/api", RecruiterRoutes);
+app.use("/api",clientRoutes)
 
 app.get("/", (req, res) => {
   res.send("server and db both are running");
