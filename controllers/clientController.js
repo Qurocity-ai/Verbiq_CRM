@@ -29,4 +29,25 @@ const getClient = async (req, res) => {
   }
 };
 
-module.exports = { createClient, getClient };
+const getClientById = async (req, res) => {
+  try {
+    const client = await clientmodel.findById(req.params.id);
+
+    if (!client) {
+      return res.status(404).json({
+        success: false,
+        message: "Client not found",
+      });
+    }
+
+    res.status(200).json({
+      success: true,
+      client,
+    });
+  } catch (err) {
+    console.log("Error fetching Client", err);
+    res.status(500).json({ success: false, err: "Internal server error" });
+  }
+};
+
+module.exports = { createClient, getClient, getClientById };
