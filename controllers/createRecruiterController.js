@@ -1,5 +1,4 @@
 const recruitermodel = require("../models/recruitermodel");
-const { getRecuiters } = require("../controllers/recruiterController");
 
 const createRecruiter = async (req, res) => {
   try {
@@ -37,18 +36,28 @@ const createRecruiter = async (req, res) => {
 
 const getAllRecruiters = async (req, res) => {
   try {
-    const recruiters = await recruitermodel.find({ role: 'recruiter' });
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 5;
+
+    const skip = (page - 1) * limit;
+
+    const recruiters = await recruitermodel.find({ role: "recruiter" }).skip(skip).limit(limit);
+
+    const totalRecruiter = await recruitermodel.countDocuments({ role: "recruiter" });
 
     res.status(200).json({
-      message: 'Recruiters fetched successfully',
-      count: recruiters.length,
+      totalRecruiter,
+      page,
+      totalPages: Math.ceil(totalRecruiter / limit),
       recruiters
     });
-  } catch (err) {
-    console.error('Error fetching recruiters:', err);
-    res.status(500).json({ message: 'Server error' });
+  }
+   catch (err) {
+    console.log("Error fetching recuiters", err);
+    res.status(500).json({ err: "Internal server error" });
   }
 };
+
 
 
 const getSingleRecruiter = async (req, res) => {
