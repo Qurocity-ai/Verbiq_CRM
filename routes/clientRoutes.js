@@ -4,11 +4,17 @@ const {
   createClient,
   getClient,
   getClientById,
+  deleteClientById,
 } = require("../controllers/clientController");
 const authenticate = require("../middlewares/authenticate");
 
 router.post("/createClient", authenticate("super_admin"), createClient);
-router.post("/getClient", authenticate("super_admin"), getClient);
-router.post("/getClient/:id", authenticate("super_admin"), getClientById);
+router.get("/getClient", authenticate("super_admin"), getClient);
+router.get("/getClient/:id", authenticate("super_admin"), getClientById);
+router.delete(
+  "/deletedClient/:id",
+  authenticate("super_admin"),
+  deleteClientById
+);
 
 module.exports = router; //
