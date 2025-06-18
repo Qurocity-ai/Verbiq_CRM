@@ -5,6 +5,7 @@ const {
   getClient,
   getClientById,
   deleteClientById,
+  updateClientById
 } = require("../controllers/clientController");
 const authenticate = require("../middlewares/authenticate");
 
@@ -15,6 +16,11 @@ router.delete(
   "/deletedClient/:id",
   authenticate("super_admin"),
   deleteClientById
+);
+router.put(
+  "/updateClient/:id",
+  authenticate("super_admin"),
+  updateClientById
 );
 
 module.exports = router; //
