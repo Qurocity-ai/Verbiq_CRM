@@ -12,7 +12,7 @@ const candidateSchema = new mongoose.Schema(
     aadharNo: { type: Number, require: false },
     FatherName: { type: String, require: false },
     DOB: { type: Date, require: false },
-    resumeURL: { type: URL, require: false },
+    resumeURL: { type: String, require: false },
     shortlisted: { type: Boolean, require: false },
     remarks: { type: String, require: false },
     feedback: { type: String, require: false },
