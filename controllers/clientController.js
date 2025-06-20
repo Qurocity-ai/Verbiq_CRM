@@ -20,15 +20,20 @@ const createClient = async (req, res) => {
 
 const getClient = async (req, res) => {
   try {
-    const page=parseInt(req.query.page) || 1;
-    const limit=parseInt(req.query.limit) || 5
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 5;
 
-    const skip=(page-1)*limit;
+    const skip = (page - 1) * limit;
 
     const clients = await clientmodel.find({}).skip(skip).limit(limit);
-    const totalClients=await clientmodel.countDocuments()
+    const totalClients = await clientmodel.countDocuments();
 
-    res.status(200).json({ totalClients,page,totalPages:Math.ceil(totalClients/limit), clients });
+    res.status(200).json({
+      totalClients,
+      page,
+      totalPages: Math.ceil(totalClients / limit),
+      clients,
+    });
   } catch (err) {
     console.log("Error fetching Client", err);
     res.status(500).json({ success: false, err: "Internal server error" });
@@ -120,5 +125,10 @@ const updateClientById = async (req, res) => {
   }
 };
 
-
-module.exports = { createClient, getClient, getClientById, deleteClientById,updateClientById };
+module.exports = {
+  createClient,
+  getClient,
+  getClientById,
+  deleteClientById,
+  updateClientById,
+};
