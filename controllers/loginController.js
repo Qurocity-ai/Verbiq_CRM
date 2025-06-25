@@ -48,4 +48,53 @@ const loginController = async (req, res) => {
   }
 };
 
-module.exports = { loginController };
+const recruiterLoginController = async (req, res) => {
+  try {
+    const { email, password } = req.body;
+
+    if (!email || !password) {
+      return res
+        .status(400)
+        .json({ message: "Email and password are required" });
+    }
+
+    const recruiter = await recruitermodel.findOne({ email });
+    if (!recruiter) {
+      return res.status(401).json({ message: "Invalid email " });
+    }
+
+    if (password !== recruiter.password) {
+      return res.status(401).json({ message: "Invalid  password" });
+    }
+
+    const payload = {
+      id: recruiter._id,
+      email: recruiter.email,
+      role: recruiter.role,
+    };
+
+    const token = jwt.sign(payload, process.env.JWT_SECRET, {
+      expiresIn: "1d",
+    });
+
+    res.json({
+      message: "Recruiter login successful",
+      token,
+      user: {
+        id: recruiter._id,
+        email: recruiter.email,
+        role: recruiter.role,
+        first_name: recruiter.first_name,
+        last_name: recruiter.last_name,
+      },
+    });
+  } catch (error) {
+    console.error("Recruiter login error:", error);
+    res.status(500).json({ message: "Server error" });
+  }
+};
+
+module.exports = { loginController, recruiterLoginController };
+
+// supriyaexit@gmail.com
+// dfghhjjhjj
