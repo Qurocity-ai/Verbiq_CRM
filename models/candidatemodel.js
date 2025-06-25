@@ -20,6 +20,7 @@ const candidateSchema = new mongoose.Schema(
     DOI: { type: Date, required: true },
     noticePeriod: { type: String, required: true },
     proficiency: { type: String, required: true },
+    recruiter:{type:String,required:true},
   },
   { timestamps: true }
 );
