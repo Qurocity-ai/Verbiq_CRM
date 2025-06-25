@@ -126,6 +126,44 @@ const deleteRecruiter = async (req, res) => {
     res.status(500).json({ message: "Server error" });
   }
 };
+const getTopRecruiters = async (req, res) => {
+  try {
+    const recruiters = await recruitermodel
+      .find({ role: 'recruiter' })
+      .sort({ createdAt: -1 }) // newest first
+      .limit(5);
+    res.json(recruiters);
+  } catch (err) {
+    console.error("Error fetching top recruiters:", err);
+    res.status(500).json({ message: "Server error" });
+  }
+};
+
+// Search recruiters by partial fullname
+const searchRecruiters = async (req, res) => {
+  try {
+    const name = req.query.name || '';
+    const recruiters = await recruitermodel.find({
+      role: 'recruiter',
+      fullname: { $regex: name, $options: 'i' }
+    }).limit(10);
+    res.json(recruiters);
+  } catch (err) {
+    console.error("Error searching recruiters:", err);
+    res.status(500).json({ message: "Server error" });
+  }
+};
+
+// Get all recruiters
+const getAllRecruiterList = async (req, res) => {
+  try {
+    const recruiters = await recruitermodel.find({ role: 'recruiter' });
+    res.json(recruiters);
+  } catch (err) {
+    console.error("Error fetching all recruiters:", err);
+    res.status(500).json({ message: "Server error" });
+  }
+};
 
 module.exports = {
   createRecruiter,
@@ -133,4 +171,8 @@ module.exports = {
   updateRecruiter,
   deleteRecruiter,
   getAllRecruiters,
+  getTopRecruiters,       // ✅ NEW
+  searchRecruiters,       // ✅ NEW
+  getAllRecruiterList,    // ✅ NEW
 };
+

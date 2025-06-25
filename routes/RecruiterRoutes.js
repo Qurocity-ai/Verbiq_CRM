@@ -1,11 +1,14 @@
 const express = require("express");
 const router = express.Router();
 const {
-  createRecruiter,
+ createRecruiter,
   getSingleRecruiter,
   updateRecruiter,
   deleteRecruiter,
-  getAllRecruiters
+  getAllRecruiters,
+  getTopRecruiters,        
+  searchRecruiters,
+  getAllRecruiterList
 } = require('../controllers/createRecruiterController');
 const authenticate = require('../middlewares/authenticate');
 
@@ -16,5 +19,8 @@ router.get('/getrecruiter/:id', authenticate('super_admin'), getSingleRecruiter)
 router.put('/updaterecruiter/:id', authenticate('super_admin'), updateRecruiter);
 router.delete('/deleterecruiter/:id', authenticate('super_admin'), deleteRecruiter);
 router.get('/getallrecruiters', authenticate('super_admin'), getAllRecruiters);
+router.get('/toprecruiters',authenticate('super_admin'), getTopRecruiters);
+router.get('/searchrecruiters',authenticate('super_admin'), searchRecruiters);
+router.get('/allrecruiters',authenticate('super_admin'), getAllRecruiterList);
 
 module.exports = router;
