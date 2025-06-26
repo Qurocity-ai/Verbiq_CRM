@@ -63,6 +63,13 @@ const recruiterLoginController = async (req, res) => {
       return res.status(401).json({ message: "Invalid email " });
     }
 
+    // Only allow users with role 'recruiter' to log in here
+    if (recruiter.role !== "recruiter") {
+      return res
+        .status(403)
+        .json({ message: "Access denied: Not a recruiter" });
+    }
+
     if (password !== recruiter.password) {
       return res.status(401).json({ message: "Invalid  password" });
     }
@@ -95,6 +102,3 @@ const recruiterLoginController = async (req, res) => {
 };
 
 module.exports = { loginController, recruiterLoginController };
-
-// supriyaexit@gmail.com
-// dfghhjjhjj
