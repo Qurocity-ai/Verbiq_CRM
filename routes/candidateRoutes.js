@@ -10,7 +10,11 @@ const {
 const authenticate = require("../middlewares/authenticate");
 
 router.post("/createCandidate", authenticate("super_admin"), createCandidate);
-router.get("/getCandidate", authenticate("super_admin"), getCandidate);
+router.get(
+  "/getCandidate",
+
+  getCandidate
+);
 router.get("/getCandidate/:id", authenticate("super_admin"), getCandidateById);
 router.delete(
   "/deleteCandidate/:id",
