@@ -158,7 +158,7 @@ const filterByDOI = async (req, res) => {
   try {
     const { startDate, endDate } = req.body;
 
-    if (!startDate && !endDate) {
+    if (!startDate || !endDate) {
       return res
         .status(400)
         .json({ success: false, message: "Date of interview is not provided" });
