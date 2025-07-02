@@ -30,7 +30,7 @@ router.delete(
   authenticate("super_admin"),
   deleteRecruiter
 );
-router.get("/getallrecruiters", authenticate("super_admin"), getAllRecruiters);
+router.get("/getallrecruiters", getAllRecruiters);
 router.get("/toprecruiters", getTopRecruiters);
 router.get("/searchrecruiters", authenticate("super_admin"), searchRecruiters);
 router.get("/allrecruiters", authenticate("super_admin"), getAllRecruiterList);
