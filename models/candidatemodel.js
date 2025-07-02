@@ -14,7 +14,7 @@ const candidateSchema = new mongoose.Schema(
     experience: { type: String, required: true },
     noticePeriod: { type: String, required: true },
     candidateStage: { type: Array, required: true },
-    DOI: { type: String, required: true },
+    DOI: { type: Date, required: true },
     proficiency: { type: String, required: true },
     recruiter: { type: String, required: true },
   },

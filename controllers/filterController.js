@@ -132,6 +132,57 @@ const filterByNoticePeriod = async (req, res) => {
     });
   }
 };
+const filterByCandidateStage = async (req, res) => {
+  try {
+    const stage = req.body;
+
+    if (!Array.isArray(stage) || stage.length === 0) {
+      return res
+        .status(400)
+        .json({ success: false, message: "Candidate Stage is not provided" });
+    }
+    const stageQuery = stage.map((stage) => ({
+      candidateStage: { $regex: stage, $options: "i" },
+    }));
+    const candidates = await candidateModel.find({ $or: stageQuery });
+    res.status(200).json(candidates);
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: "Error while filtering candidate by Stages",
+      error: error.message,
+    });
+  }
+};
+const filterByDOI = async (req, res) => {
+  try {
+    const { startDate, endDate } = req.body;
+
+    if (!startDate && !endDate) {
+      return res
+        .status(400)
+        .json({ success: false, message: "Date of interview is not provided" });
+    }
+
+    let query = {};
+    if (startDate && endDate) {
+      query.DOI = { $gte: new Date(startDate), $lte: new Date(endDate) };
+    } else if (startDate) {
+      query.DOI = { $gte: new Date(startDate) };
+    } else if (endDate) {
+      query.DOI = { $lte: new Date(endDate) };
+    }
+
+    const candidates = await candidateModel.find(query);
+    res.status(200).json(candidates);
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: "Error while filtering candidate by Date of interview",
+      error: error.message,
+    });
+  }
+};
 
 module.exports = {
   filterByCurrentCTC,
@@ -140,4 +191,6 @@ module.exports = {
   filterByLanguage,
   filterByExperience,
   filterByNoticePeriod,
+  filterByCandidateStage,
+  filterByDOI,
 };
