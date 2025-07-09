@@ -21,6 +21,7 @@ const jobSchema = new mongoose.Schema(
     interviewProcess: { type: String, requried: true },
     RFQstatus: { type: String, requried: true },
     extraNotes: { type: String, requried: true },
+    CTCoffer: { type: Number, requried: true },
   },
   { timestamps: true }
 );
