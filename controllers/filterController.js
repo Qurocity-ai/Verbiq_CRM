@@ -1,4 +1,5 @@
 const candidateModel = require("../models/candidatemodel.js");
+const jobmodel = require("../models/jobmodel");
 
 const filterByCurrentCTC = async (req, res) => {
   try {
@@ -183,6 +184,30 @@ const filterByDOI = async (req, res) => {
     });
   }
 };
+const filterJobByClientName = async (req, res) => {
+  try {
+    const { client } = req.body;
+
+    if (!client || !Array.isArray(client) || client.length === 0) {
+      return res
+        .status(400)
+        .json({ success: false, message: "Client Name is not provided" });
+    }
+
+    const jobs = await jobmodel.find({ clientName: { $in: client } });
+    res.status(200).json({
+      success: true,
+      count: jobs.length,
+      data: jobs,
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: "Error while filtering Jobs By Client name",
+      error: error.message,
+    });
+  }
+};
 
 module.exports = {
   filterByCurrentCTC,
@@ -193,4 +218,5 @@ module.exports = {
   filterByNoticePeriod,
   filterByCandidateStage,
   filterByDOI,
+  filterJobByClientName,
 };

@@ -3,7 +3,7 @@ const { schema } = require("./recruitermodel");
 
 const jobSchema = new mongoose.Schema(
   {
-    clientName: { type: mongoose.Schema.ObjectId, required: true },
+    clientName: { type: String, required: true },
     headCount: { type: Number, required: true },
     processName: { type: String, required: true },
     POCcontactNumber: { type: Number, requried: true },
@@ -17,7 +17,7 @@ const jobSchema = new mongoose.Schema(
     experience: { type: String, requried: true },
     interviewType: { type: String, requried: true },
     noticePeriod: { type: String, requried: true },
-    relocationAllow: { type: Boolean, requried: true },
+    relocationAllow: { type: String, requried: true },
     interviewProcess: { type: String, requried: true },
     RFQstatus: { type: String, requried: true },
     extraNotes: { type: String, requried: true },
