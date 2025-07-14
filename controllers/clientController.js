@@ -3,17 +3,26 @@ const jobmodel = require("../models/jobmodel");
 
 const createClient = async (req, res) => {
   try {
-    const client = new clientmodel(req.body);
-    await client.save();
+    const clients = req.body; // expect an array of client objects
+
+    if (!Array.isArray(clients) || clients.length === 0) {
+      return res.status(400).json({
+        success: false,
+        message: "Request body must be a non-empty array of clients",
+      });
+    }
+
+    const created = await clientmodel.insertMany(clients);
+
     res.status(200).json({
       success: true,
-      message: "client requirement created successfully",
-      client,
+      message: `${created.length} clients created successfully`,
+      clients: created,
     });
   } catch (error) {
     res.status(500).json({
       success: false,
-      message: "Error while creating client requirement",
+      message: "Error creating clients",
       error: error.message,
     });
   }
