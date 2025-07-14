@@ -10,6 +10,7 @@ const {
   filterByCandidateStage,
   filterByDOI,
   filterJobByClientName,
+  filterClientByCompanyName,
 } = require("../controllers/filterController.js");
 const authenticate = require("../middlewares/authenticate");
 
@@ -22,5 +23,6 @@ router.post("/filterByNoticePeriod", filterByNoticePeriod);
 router.post("/filterByCandidateStage", filterByCandidateStage);
 router.post("/filterByDOI", filterByDOI);
 router.post("/filterJobByClientName", filterJobByClientName);
+router.post("/filterClientByCompanyName", filterClientByCompanyName);
 
 module.exports = router; //
